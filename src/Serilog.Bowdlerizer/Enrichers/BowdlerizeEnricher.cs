@@ -30,6 +30,7 @@ namespace Serilog.Bowdlerizer.Enrichers {
         /// <param name="logEvent">The log event to enrich.</param>
         /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory) {
+            var changed = new Dictionary<string, LogEventPropertyValue>();
             foreach (var property in logEvent.Properties) {
                 if (property.Value is ScalarValue scalar) {
                     if (JsonStringDestructurer.IsJsonString(scalar.Value)) {
@@ -40,7 +41,7 @@ namespace Serilog.Bowdlerizer.Enrichers {
                         _ = bowdlerizer.BowdlerizeJToken(token);
                         var v = JTokenDestructurer.GetValues(propertyValueConverter, token) as StructureValue;
                         var key = property.Key;
-                        logEvent.AddOrUpdateProperty(new LogEventProperty(key, v));
+                        changed.Add(key, v);
                     } else if (XmlStringDestructurer.IsXmlString(scalar.Value)) {
                         GetPropertyValueConverter(propertyFactory);
 
@@ -55,9 +56,13 @@ namespace Serilog.Bowdlerizer.Enrichers {
                         var v = new ScalarValue(node.ToString(SaveOptions.DisableFormatting));
 
                         var key = property.Key;
-                        logEvent.AddOrUpdateProperty(new LogEventProperty(key, v));
+                        changed.Add(key, v);
                     }
                 }
+            }
+
+            foreach (var change in changed) {
+                logEvent.AddOrUpdateProperty(new LogEventProperty(change.Key, change.Value));
             }
 
             Bowdlerize(logEvent);
