@@ -19,7 +19,7 @@ namespace Serilog.Bowdlerizer.Destructurers {
             if (value is string s) {
                 s = s.Trim();
                 // TODO: this is very poor/simple check
-                if (s.StartsWith("<?xml") && s.EndsWith(">")) {
+                if (s.StartsWith("<") && s.EndsWith(">")) {
                     return true;
                 }
             }
