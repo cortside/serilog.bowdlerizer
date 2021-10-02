@@ -21,14 +21,18 @@ namespace Serilog.Bowdlerizer {
                 result = JsonStringDestructurer.GetValues(propertyValueFactory, s);
                 return true;
             } else if (XmlStringDestructurer.IsXmlString(value)) {
-                var s = bowdlerizer.BowdlerizeJson(value as string);
+                var s = bowdlerizer.BowdlerizeXml(value as string);
                 result = JsonStringDestructurer.GetValues(propertyValueFactory, s);
                 return true;
-            } else {
-                result = ClassDestructurer.GetValues(value, propertyValueFactory, bowdlerizer);
-                //return cached.CanDestructure;
-                return true;
             }
+            //else {
+            //    result = ClassDestructurer.GetValues(value, propertyValueFactory, bowdlerizer);
+            //    //return cached.CanDestructure;
+            //    return true;
+            //}
+
+            result = null;
+            return false;
         }
     }
 }

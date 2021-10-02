@@ -74,7 +74,7 @@ namespace Serilog.Bowdlerizer.Tests {
             LogEvent evt = null;
 
             var log = new LoggerConfiguration()
-                //.Destructure.UsingBowdlerizer(bowdlerizer)
+                .Destructure.UsingBowdlerizer(bowdlerizer)
                 .Enrich.WithBowdlerizer(bowdlerizer)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
@@ -99,10 +99,10 @@ namespace Serilog.Bowdlerizer.Tests {
             var props = sv.Properties.ToDictionary(p => p.Name, p => p.Value);
 
             var scalar = ((StructureValue)props["MailingAddress"]).Properties.ToDictionary(p => p.Name, p => p.Value)["City"] as ScalarValue;
-            //Assert.Equal("***", scalar.LiteralValue());
+            Assert.Equal("***", scalar.LiteralValue());
 
-            //Assert.NotEqual(model.BirthDate.ToString(), props["BirthDate"].LiteralValue());
-            //Assert.Equal(model.EmailAddress, props["EmailAddress"].LiteralValue());
+            Assert.NotEqual(model.BirthDate.ToString(), props["BirthDate"].LiteralValue());
+            Assert.Equal(model.EmailAddress, props["EmailAddress"].LiteralValue());
 
             //var expected = "Here is Person { PersonId: 0, MailingAddress: Address { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\" }";
             var expected = "Here is Person { PersonId: 0, MailingAddress: Address { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Addresses: [Address { Address1: \"123 Main\", Address2: \"c/o Elmer\", City: \"Salt Lake City\", State: null, Zip: null }, Address { Address1: \"234 Main\", Address2: \"c/o Elmer\", City: \"Salt Lake City\", State: null, Zip: null }, Address { Address1: \"345 Main\", Address2: \"c/o Elmer\", City: \"Salt Lake City\", State: null, Zip: null }] }";
