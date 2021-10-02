@@ -11,8 +11,6 @@ using Serilog.Events;
 
 namespace Serilog.Bowdlerizer.Enrichers {
     public class BowdlerizeEnricher : ILogEventEnricher {
-        //private readonly string[] filters = { "$..MailingAddress.Address1", "$..MailingAddress.City", "$..BirthDate" };
-
         private readonly Cortside.Bowdlerizer.Bowdlerizer bowdlerizer;
         private readonly FieldInfo logEventValueProperty;
         private static ILogEventPropertyValueFactory propertyValueConverter;
