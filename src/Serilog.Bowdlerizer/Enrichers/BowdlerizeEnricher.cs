@@ -108,7 +108,7 @@ namespace Serilog.Bowdlerizer.Enrichers {
             LogEventProperty root = new LogEventProperty("root", sv);
             foreach (var property in properties) {
                 if (root.Value is StructureValue svx) {
-                    var p = svx.Properties.FirstOrDefault(x => x.Name == property);
+                    var p = svx.Properties.FirstOrDefault(x => x != null && x.Name == property);
                     if (p != null) {
                         root = p;
                     } else {
