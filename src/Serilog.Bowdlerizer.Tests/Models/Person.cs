@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Serilog.Bowdlerizer.Tests.Models {
     public class Person {
@@ -19,5 +20,7 @@ namespace Serilog.Bowdlerizer.Tests.Models {
         public string Suffix { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
+
+        public List<Address> Addresses { get; set; }
     }
 }

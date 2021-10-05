@@ -28,7 +28,7 @@ assembly_info:
   assembly_informational_version: '{version}'
 
 before_build:
-- appveyor-retry dotnet restore src/Cortside.Bowdlerizer.sln -v Minimal
+- appveyor-retry dotnet restore src/Serilog.Bowdlerizer.sln -v Minimal
 - set DNX_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%
 - dotnet --info
 
@@ -41,10 +41,10 @@ build:
 
 build_script:
 - dotnet tool install --global dotnet-sonarscanner --version 5.0.4
-- dotnet sonarscanner begin /o:"cortside" /k:"cortside_cortside.bowdlerizer" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="3c7961eb39a01d592d6fbe353a7eaa03000b4df7" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
-- dotnet build src/Cortside.Bowdlerizer.sln --configuration %Configuration% /property:Version=%APPVEYOR_BUILD_VERSION%
-- dotnet test src/Cortside.Bowdlerizer.Tests/Cortside.Bowdlerizer.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- dotnet sonarscanner end /d:sonar.login="3c7961eb39a01d592d6fbe353a7eaa03000b4df7"
+- dotnet sonarscanner begin /o:"cortside" /k:"cortside_serilog.bowdlerizer" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="a22996c7a4ce675aa1e28bdd15d7af23aa06b4bd" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+- dotnet build src/Serilog.Bowdlerizer.sln --configuration %Configuration% /property:Version=%APPVEYOR_BUILD_VERSION%
+- dotnet test src/Serilog.Bowdlerizer.Tests/Serilog.Bowdlerizer.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+- dotnet sonarscanner end /d:sonar.login="a22996c7a4ce675aa1e28bdd15d7af23aa06b4bd"
 
 after_build:
 - ps: >-
@@ -53,7 +53,7 @@ after_build:
     if($branch -ne 'master') {
         $fileVersion = "${fileVersion}-${branch}"; 
     }   
-    dotnet pack src/cortside.bowdlerizer.sln --include-symbols -p:SymbolPackageFormat=snupkg --configuration $env:configuration -o ((get-location).Path + '\artifacts') /property:Version=$fileVersion 
+    dotnet pack src/serilog.bowdlerizer.sln --include-symbols -p:SymbolPackageFormat=snupkg --configuration $env:configuration -o ((get-location).Path + '\artifacts') /property:Version=$fileVersion 
     
 artifacts:
 - path: artifacts\**\*.*

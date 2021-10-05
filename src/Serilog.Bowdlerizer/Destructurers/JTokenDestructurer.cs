@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Serilog.Core;
@@ -10,7 +9,6 @@ namespace Serilog.Bowdlerizer.Destructurers {
             LogEventPropertyValue result;
             var structureProperties = new List<LogEventProperty>();
             foreach (var o in token.Children()) {
-                Console.Out.WriteLine(o);
                 if (o is JProperty property) {
                     var key = property.Name;
                     object value;

@@ -9,7 +9,7 @@ namespace Serilog.Bowdlerizer {
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            return configuration.With(new BowdlerizerDestructuringPolicy(bowdlerizer));
+            return configuration.With(new[] { new BowdlerizerDestructuringPolicy(bowdlerizer) });
         }
 
         public static LoggerConfiguration WithBowdlerizer(this LoggerEnrichmentConfiguration enrich, Cortside.Bowdlerizer.Bowdlerizer bowdlerizer) {

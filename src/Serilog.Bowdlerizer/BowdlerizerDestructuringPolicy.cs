@@ -20,11 +20,19 @@ namespace Serilog.Bowdlerizer {
                 var s = bowdlerizer.BowdlerizeJson(value as string);
                 result = JsonStringDestructurer.GetValues(propertyValueFactory, s);
                 return true;
-            } else {
-                result = ClassDestructurer.GetValues(value, propertyValueFactory, bowdlerizer);
-                //return cached.CanDestructure;
+            } else if (XmlStringDestructurer.IsXmlString(value)) {
+                var s = bowdlerizer.BowdlerizeXml(value as string);
+                result = JsonStringDestructurer.GetValues(propertyValueFactory, s);
                 return true;
             }
+            //else {
+            //    result = ClassDestructurer.GetValues(value, propertyValueFactory, bowdlerizer);
+            //    //return cached.CanDestructure;
+            //    return true;
+            //}
+
+            result = null;
+            return false;
         }
     }
 }

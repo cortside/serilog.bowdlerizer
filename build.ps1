@@ -30,9 +30,9 @@ echo "build: Build started"
 $version = @{ $true = $env:APPVEYOR_BUILD_VERSION; $false = "1.0.0" }[$env:APPVEYOR_BUILD_VERSION -ne $NULL];
 
 # build
-$args = "clean $PSScriptRoot\src\Cortside.Bowdlerizer.sln"
+$args = "clean $PSScriptRoot\src\Serilog.Bowdlerizer.sln"
 Invoke-Exe -cmd dotnet -args $args
-$args = "build src/Cortside.Bowdlerizer.sln --configuration Debug /property:Version=$version"
+$args = "build src/Serilog.Bowdlerizer.sln --configuration Debug /property:Version=$version"
 Invoke-Exe -cmd dotnet -args $args
 
 gci -filter *tests.csproj -recurse | %{ dotnet test $_.FullName --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover }

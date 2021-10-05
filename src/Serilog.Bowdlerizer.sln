@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Bowdlerizer", "Serilog.Bowdlerizer\Serilog.Bowdlerizer.csproj", "{E2C51748-DEA1-41E7-8F77-0C21C478937A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Bowdlerizer.Tests", "Serilog.Bowdlerizer.Tests\Serilog.Bowdlerizer.Tests.csproj", "{4E1A24CC-1886-4609-BB7A-064CD4D48986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Bowdlerizer.Tests", "Serilog.Bowdlerizer.Tests\Serilog.Bowdlerizer.Tests.csproj", "{4E1A24CC-1886-4609-BB7A-064CD4D48986}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{6DC28AC6-F607-4DBC-BDF1-3DBB08F36709}"
+	ProjectSection(SolutionItems) = preProject
+		Notes.md = Notes.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
