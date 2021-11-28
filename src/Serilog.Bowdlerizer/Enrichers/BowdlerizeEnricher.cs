@@ -35,9 +35,22 @@ namespace Serilog.Bowdlerizer.Enrichers {
                         GetPropertyValueConverter(propertyFactory);
 
                         var s = scalar.Value as string;
+                        LogEventPropertyValue v = null;
                         var token = JToken.Parse(s);
-                        _ = bowdlerizer.BowdlerizeJToken(token);
-                        var v = JTokenDestructurer.GetValues(propertyValueConverter, token) as StructureValue;
+                        if (token.Type == JTokenType.Array) {
+                            var propsList = new List<LogEventPropertyValue>();
+                            foreach (var item in token.Children()) {
+                                _ = bowdlerizer.BowdlerizeJToken(item);
+                                var values = JTokenDestructurer.GetValues(propertyValueConverter, item);
+                                var properties = ((StructureValue)values).Properties;
+                                var pv = new StructureValue(properties, "JToken");
+                                propsList.Add(pv);
+                            }
+                            v = new SequenceValue(propsList);
+                        } else {
+                            _ = bowdlerizer.BowdlerizeJToken(token);
+                            v = JTokenDestructurer.GetValues(propertyValueConverter, token) as StructureValue;
+                        }
                         var key = property.Key;
                         changed.Add(key, v);
                     } else if (XmlStringDestructurer.IsXmlString(scalar.Value)) {
@@ -112,6 +125,10 @@ namespace Serilog.Bowdlerizer.Enrichers {
                     if (p != null) {
                         root = p;
                     } else {
+                        //p = svx.Properties.FirstOrDefault(x => x != null && property == x.Name + "[*]");
+                        //if (p != null) {
+                        //    var hello = "hello";
+                        //}
                         value = null;
                         return false;
                     }

@@ -1,3 +1,5 @@
+using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog.Core;
 using Serilog.Events;
@@ -12,10 +14,22 @@ namespace Serilog.Bowdlerizer.Destructurers {
         public static bool IsJsonString(object value) {
             if (value is string s) {
                 s = s.Trim();
-                // TODO: this is very poor/simple check
-                if (s.StartsWith("{") && s.EndsWith("}")) {
-                    return true;
+                if ((s.StartsWith("{") && s.EndsWith("}")) || (s.StartsWith("[") && s.EndsWith("]"))) {
+                    {
+                        try {
+                            var obj = JToken.Parse(s);
+                            return true;
+                        } catch (JsonReaderException jex) {
+                            //Exception in parsing json
+                            return false;
+                        } catch (Exception ex) //some other exception
+                          {
+                            return false;
+                        }
+
+                    }
                 }
+                return false;
             }
             return false;
         }
