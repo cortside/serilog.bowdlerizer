@@ -40,7 +40,7 @@ build:
   verbosity: minimal
 
 build_script:
-- dotnet tool install --global dotnet-sonarscanner --version 5.0.4
+- dotnet tool install --global dotnet-sonarscanner #--version 5.0.4
 - dotnet sonarscanner begin /o:"cortside" /k:"cortside_serilog.bowdlerizer" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="a22996c7a4ce675aa1e28bdd15d7af23aa06b4bd" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 - dotnet build src/Serilog.Bowdlerizer.sln --configuration %Configuration% /property:Version=%APPVEYOR_BUILD_VERSION%
 - dotnet test src/Serilog.Bowdlerizer.Tests/Serilog.Bowdlerizer.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
@@ -51,8 +51,12 @@ after_build:
     $branch = $ENV:APPVEYOR_REPO_BRANCH;
     $fileVersion = $env:APPVEYOR_BUILD_VERSION;
     if($branch -ne 'master') {
-        $fileVersion = "${fileVersion}-${branch}"; 
-    }   
+        $fileVersion = "${fileVersion}-${branch}";
+    }
+    
+    $fileVersion = $fileVersion.replace("release/", "");
+    $fileVersion = $fileVersion.replace("feature/", "");
+    $fileVersion = $fileVersion.replace("bugfix/", "");
     dotnet pack src/serilog.bowdlerizer.sln --include-symbols -p:SymbolPackageFormat=snupkg --configuration $env:configuration -o ((get-location).Path + '\artifacts') /property:Version=$fileVersion 
     
 artifacts:
