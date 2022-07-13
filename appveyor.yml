@@ -51,12 +51,12 @@ after_build:
     $branch = $ENV:APPVEYOR_REPO_BRANCH;
     $fileVersion = $env:APPVEYOR_BUILD_VERSION;
     if($branch -ne 'master') {
-        $fileVersion = "${fileVersion}-${branch}"; 
+        $fileVersion = "${fileVersion}-${branch}";
     }
     
-    $fileVersion.replace("release/", "")
-    $fileVersion.replace("feature/", "")
-    $fileVersion.replace("bugfix/", "")
+    $fileVersion = $fileVersion.replace("release/", "");
+    $fileVersion = $fileVersion.replace("feature/", "");
+    $fileVersion = $fileVersion.replace("bugfix/", "");
     dotnet pack src/serilog.bowdlerizer.sln --include-symbols -p:SymbolPackageFormat=snupkg --configuration $env:configuration -o ((get-location).Path + '\artifacts') /property:Version=$fileVersion 
     
 artifacts:
