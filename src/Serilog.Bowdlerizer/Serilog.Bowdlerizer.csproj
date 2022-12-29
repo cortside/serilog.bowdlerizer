@@ -9,12 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="Cortside.Bowdlerizer" Version="1.0.17" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.2.32">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.4.27">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Serilog.Exceptions" Version="8.3.0" />
-    <PackageReference Include="Serilog.Expressions" Version="3.4.0" />
+    <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
+    <PackageReference Include="Serilog.Expressions" Version="3.4.1" />
   </ItemGroup>
 
 </Project>
