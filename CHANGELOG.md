@@ -1,5 +1,25 @@
-# Release 1.0
+# Release 1.1
 
+|Commit|Date|Author|Message|
+|---|---|---|---|
+| ed6ab2d | <span style="white-space:nowrap;">2022-05-05</span> | <span style="white-space:nowrap;">Glen Kingston</span> |  Added Children to Person class and test case for issue 4
+| c0f2a51 | <span style="white-space:nowrap;">2022-07-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  [feature/BOT-20220713] updated nuget packages
+| a83ec2b | <span style="white-space:nowrap;">2022-07-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  handle git flow named branches
+| 4242368 | <span style="white-space:nowrap;">2022-07-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  handle git flow named branches
+| 87d206d | <span style="white-space:nowrap;">2022-07-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge pull request #5 from cortside/feature/BOT-20220713
+| 6666367 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  [feature/BOT-20221229] updated nuget packages
+| cbdbf48 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Delete .dtbcache
+| 703f2e9 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Delete src/Serilog.Bowdlerizer/.vs/Serilog.Bowdlerizer directory
+| 98a7093 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update build and helper scripts
+| e4031f3 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'develop' into feature/BOT-20221229
+| cda66e5 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update build and helper scripts
+| ce00d5b | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  (origin/feature/BOT-20221229, feature/BOT-20221229) initial changelog
+| dc85814 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge pull request #6 from cortside/feature/BOT-20221229
+| 2f0aef0 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  (origin/Issue4TestCase, Issue4TestCase) Merge branch 'develop' into Issue4TestCase
+| 823ac16 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  (HEAD -> release/1.1, origin/develop, develop) Merge pull request #7 from cortside/Issue4TestCase
+****
+
+# Release 1.0
 |Commit|Date|Author|Message|
 |---|---|---|---|
 | bb24146 | <span style="white-space:nowrap;">2021-07-01</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  initial prototype version
