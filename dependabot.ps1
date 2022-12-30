@@ -105,7 +105,8 @@ if ($files -ne "0") {
 	git push --set-upstream origin $branch
 
 	$remote = (git remote -v)
-	if ($remote -contains "github.com") {
+	if ($remote -like "*github.com*") {
+		gh repo set-default
 		gh pr create --title "$bot" --body "$body" --base develop
 	} else {
 		echo "should create the pr here -- everything passed - $branch"	
