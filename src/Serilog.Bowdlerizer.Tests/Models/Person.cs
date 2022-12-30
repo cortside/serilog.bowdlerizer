@@ -20,7 +20,7 @@ namespace Serilog.Bowdlerizer.Tests.Models {
         public string Suffix { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
-
+        public List<Person> Children { get; set; } = new List<Person>();
         public List<Address> Addresses { get; set; }
     }
 }
