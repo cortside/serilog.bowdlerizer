@@ -3,6 +3,7 @@ using System.Linq;
 using Cortside.Bowdlerizer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Serilog.Bowdlerizer.Destructurers.Policies;
 using Serilog.Bowdlerizer.Tests.Helpers;
 using Serilog.Bowdlerizer.Tests.Models;
@@ -66,7 +67,7 @@ namespace Serilog.Bowdlerizer.Tests {
             Assert.NotEqual(model.BirthDate.ToString(), props["BirthDate"].LiteralValue());
             Assert.Equal(model.EmailAddress, props["EmailAddress"].LiteralValue());
 
-            var expected = "Here is JToken { PersonId: 0, MailingAddress: JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Addresses: null }";
+            var expected = "Here is JToken { PersonId: 0, MailingAddress: JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Children: [], Addresses: null }";
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
         }
@@ -101,7 +102,7 @@ namespace Serilog.Bowdlerizer.Tests {
             Assert.NotEqual(model.BirthDate.ToString(), props["BirthDate"].LiteralValue());
             Assert.Equal(model.EmailAddress, props["EmailAddress"].LiteralValue());
 
-            var expected = "Here is Person { PersonId: 0, MailingAddress: Address { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Addresses: null }";
+            var expected = "Here is Person { PersonId: 0, MailingAddress: Address { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Children: [], Addresses: null }";
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
         }
@@ -198,7 +199,7 @@ namespace Serilog.Bowdlerizer.Tests {
             Assert.NotEqual(model.BirthDate.ToString(), props["BirthDate"].LiteralValue());
             Assert.Equal(model.EmailAddress, props["EmailAddress"].LiteralValue());
 
-            var expected = "Here is JToken { PersonId: 0, MailingAddress: JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Addresses: null }";
+            var expected = "Here is JToken { PersonId: 0, MailingAddress: JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Children: [], Addresses: null }";
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
         }
@@ -228,7 +229,7 @@ namespace Serilog.Bowdlerizer.Tests {
 
             var sv = (SequenceValue)evt.Properties["Ignored"];
 
-            var expected = "Here is [JToken { PersonId: 0, MailingAddress: JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Addresses: null }, JToken { PersonId: 0, MailingAddress: null, FirstName: \"***\", EmailAddress: null, LastName: \"\", SocialSecurityNumber: \"\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Addresses: null }]";
+            var expected = "Here is [JToken { PersonId: 0, MailingAddress: JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, FirstName: \"***\", EmailAddress: \"foo@bar.baz\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: \"(801) 867-5309\", BirthDate: \"***\", Children: [], Addresses: null }, JToken { PersonId: 0, MailingAddress: null, FirstName: \"***\", EmailAddress: null, LastName: \"\", SocialSecurityNumber: \"\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [], Addresses: null }]";
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
         }
@@ -255,7 +256,7 @@ namespace Serilog.Bowdlerizer.Tests {
             var sv = (StructureValue)evt.Properties["Ignored"];
             var props = sv.Properties.ToDictionary(p => p.Name, p => p.Value);
 
-            var expected = "Here is JToken { PersonId: 0, MailingAddress: \"***\", FirstName: \"***\", EmailAddress: null, LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Addresses: [JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, JToken { Address1: \"***\", Address2: \"c/o Candy\", City: \"***\", State: null, Zip: null }] }";
+            var expected = "Here is JToken { PersonId: 0, MailingAddress: \"***\", FirstName: \"***\", EmailAddress: null, LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [], Addresses: [JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, JToken { Address1: \"***\", Address2: \"c/o Candy\", City: \"***\", State: null, Zip: null }] }";
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
         }
@@ -278,5 +279,67 @@ namespace Serilog.Bowdlerizer.Tests {
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
         }
+
+        [Fact(Skip = "Fails due to JSON parsing different than object")]
+        public void BowdlerizePersonWithNestedList() {
+            var personWithKids =  new Person {                 
+                FirstName = "tfName",
+                LastName = "tlName",
+                EmailAddress = "testemail@email.com",
+                SocialSecurityNumber = "123456",
+                Addresses = new List<Address> {
+                    new Address() { Address1 = "123 Main", Address2 = "c/o Elmer", City = "Salt Lake City" },
+                    new Address() { Address1 = "234 Main", Address2 = "c/o Candy", City = "Las Vegas" },
+                }                
+            };
+            personWithKids.Children.Add(new Person() {
+                FirstName = "ChildFName",
+                LastName = "ChildLName",
+                EmailAddress = "testchildemail@email.com",
+                SocialSecurityNumber = "123456",
+                Children = new List<Person> { new Person() {
+                        FirstName = "GrandChildFName",
+                        LastName = "GrandChildLName",
+                        EmailAddress = "testgchildemail@amil.com",
+                        SocialSecurityNumber = "1234567"
+                    }
+                },
+                Addresses = new List<Address> {
+                    new Address() { Address1 = "123 Main", Address2 = "c/o Elmer", City = "Salt Lake City" },
+                    new Address() { Address1 = "234 Main", Address2 = "c/o Candy", City = "Las Vegas" },
+                }                
+            });
+           
+            LogEvent evt = null;
+            var log = new LoggerConfiguration()
+                .Destructure.UsingBowdlerizer(bowdlerizer)
+                .Enrich.WithBowdlerizer(bowdlerizer)
+                .WriteTo.Sink(new DelegatingSink(e => evt = e))
+                .CreateLogger();
+            log.Information("Here is PERSON JSON: {@jsonWithKids}", JsonConvert.SerializeObject(personWithKids));
+            var sv = (StructureValue)evt.Properties["jsonWithKids"];
+            var props = sv.Properties.ToDictionary(p => p.Name, p => p.Value);
+            var actualJSON = evt.RenderMessage();
+
+            LogEvent evt2 = null;
+            var logObject = new LoggerConfiguration()
+                .Destructure.UsingBowdlerizer(bowdlerizer)
+                .Enrich.WithBowdlerizer(bowdlerizer)
+                .WriteTo.Sink(new DelegatingSink(e => evt2 = e))
+                .CreateLogger();
+            logObject.Information("Here is PERSON OBJ: {@personWithKids}", personWithKids);
+            var sv2 = (StructureValue)evt2.Properties["personWithKids"];
+            var props2 = sv2.Properties.ToDictionary(p => p.Name, p => p.Value);
+            var actualObject = evt2.RenderMessage();
+
+            var expectedJSON = "Here is PERSON JSON: JToken { PersonId: 0, MailingAddress: \"***\", FirstName: \"***\", EmailAddress: \"testemail@email.com\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [JToken { PersonId: 0, MailingAddress: null, FirstName: \"***\", EmailAddress: \"testchildemail@email.com\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [JToken { PersonId: 0, MailingAddress: null, FirstName: \"***\", EmailAddress: \"testgchildemail@amil.com\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [], Addresses: null }], Addresses: [JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, JToken { Address1: \"***\", Address2: \"c/o Candy\", City: \"***\", State: null, Zip: null }] }], Addresses: [JToken { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, JToken { Address1: \"***\", Address2: \"c/o Candy\", City: \"***\", State: null, Zip: null }] }";
+            var expectedObject = "Here is PERSON OBJ: Person { PersonId: 0, MailingAddress: \"***\", FirstName: \"***\", EmailAddress: \"testemail@email.com\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [Person { PersonId: 0, MailingAddress: null, FirstName: \"***\", EmailAddress: \"testchildemail@email.com\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [Person { PersonId: 0, MailingAddress: null, FirstName: \"***\", EmailAddress: \"testgchildemail@amil.com\", LastName: \"***\", SocialSecurityNumber: \"***\", Suffix: null, PhoneNumber: null, BirthDate: \"***\", Children: [], Addresses: null }], Addresses: [Address { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, Address { Address1: \"***\", Address2: \"c/o Candy\", City: \"***\", State: null, Zip: null }] }], Addresses: [Address { Address1: \"***\", Address2: \"c/o Elmer\", City: \"***\", State: null, Zip: null }, Address { Address1: \"***\", Address2: \"c/o Candy\", City: \"Las Vegas\", State: null, Zip: null }] }";
+
+            //this passes and *** out all names etc in nested objects
+            Assert.Equal(expectedJSON, actualJSON);
+
+            //currently this does not pass as nested objects are not set to *** 
+            Assert.Equal(expectedObject, actualObject);
+        }        
     }
 }
