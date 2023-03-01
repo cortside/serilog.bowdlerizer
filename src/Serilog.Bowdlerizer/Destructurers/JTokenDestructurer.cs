@@ -21,7 +21,7 @@ namespace Serilog.Bowdlerizer.Destructurers {
                         foreach (var item in property.Value.Children()) {
                             var values = GetValues(propertyValueFactory, item);
                             var properties = ((StructureValue)values).Properties;
-                            var pv = new StructureValue(properties, "JToken");
+                            var pv = new StructureValue(properties);
                             propsList.Add(pv);
                         }
                         var seq = new SequenceValue(propsList);
@@ -30,14 +30,14 @@ namespace Serilog.Bowdlerizer.Destructurers {
                     } else {
                         var values = GetValues(propertyValueFactory, property.Value);
                         var properties = ((StructureValue)values).Properties;
-                        var pv = new StructureValue(properties, "JToken");
+                        var pv = new StructureValue(properties);
                         p = new LogEventProperty(key, pv);
                     }
                     structureProperties.Add(p);
                 }
             }
 
-            result = new StructureValue(structureProperties, "JToken");
+            result = new StructureValue(structureProperties);
             return result;
         }
     }

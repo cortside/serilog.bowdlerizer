@@ -1,5 +1,4 @@
 using System;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog.Core;
 using Serilog.Events;
@@ -12,26 +11,21 @@ namespace Serilog.Bowdlerizer.Destructurers {
         }
 
         public static bool IsJsonString(object value) {
-            if (value is string s) {
-                s = s.Trim();
-                if ((s.StartsWith("{") && s.EndsWith("}")) || (s.StartsWith("[") && s.EndsWith("]"))) {
-                    {
-                        try {
-                            var obj = JToken.Parse(s);
-                            return true;
-                        } catch (JsonReaderException jex) {
-                            //Exception in parsing json
-                            return false;
-                        } catch (Exception ex) //some other exception
-                          {
-                            return false;
-                        }
-
-                    }
-                }
+            if (!(value is string s)) {
                 return false;
             }
-            return false;
+
+            s = s.Trim();
+            if ((!s.StartsWith("{") || !s.EndsWith("}")) && (!s.StartsWith("[") || !s.EndsWith("]"))) {
+                return false;
+            }
+
+            try {
+                _ = JToken.Parse(s);
+                return true;
+            } catch (Exception) {
+                return false;
+            }
         }
     }
 }

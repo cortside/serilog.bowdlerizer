@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Xml;
-using System.Xml.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Serilog.Bowdlerizer.Destructurers;
 using Serilog.Core;
 using Serilog.Events;
@@ -32,40 +28,47 @@ namespace Serilog.Bowdlerizer.Enrichers {
             foreach (var property in logEvent.Properties) {
                 if (property.Value is ScalarValue scalar) {
                     if (JsonStringDestructurer.IsJsonString(scalar.Value)) {
-                        GetPropertyValueConverter(propertyFactory);
+                        //GetPropertyValueConverter(propertyFactory);
 
-                        var s = scalar.Value as string;
-                        LogEventPropertyValue v = null;
-                        var token = JToken.Parse(s);
-                        if (token.Type == JTokenType.Array) {
-                            var propsList = new List<LogEventPropertyValue>();
-                            foreach (var item in token.Children()) {
-                                _ = bowdlerizer.BowdlerizeJToken(item);
-                                var values = JTokenDestructurer.GetValues(propertyValueConverter, item);
-                                var properties = ((StructureValue)values).Properties;
-                                var pv = new StructureValue(properties, "JToken");
-                                propsList.Add(pv);
-                            }
-                            v = new SequenceValue(propsList);
-                        } else {
-                            _ = bowdlerizer.BowdlerizeJToken(token);
-                            v = JTokenDestructurer.GetValues(propertyValueConverter, token) as StructureValue;
-                        }
+                        //var s = scalar.Value as string;
+                        //LogEventPropertyValue v = null;
+                        //var token = JToken.Parse(s);
+                        //if (token.Type == JTokenType.Array) {
+                        //    var propsList = new List<LogEventPropertyValue>();
+                        //    foreach (var item in token.Children()) {
+                        //        _ = bowdlerizer.BowdlerizeJToken(item);
+                        //        var values = JTokenDestructurer.GetValues(propertyValueConverter, item);
+                        //        var properties = ((StructureValue)values).Properties;
+                        //        var pv = new StructureValue(properties);
+                        //        propsList.Add(pv);
+                        //    }
+                        //    v = new SequenceValue(propsList);
+                        //} else {
+                        //    _ = bowdlerizer.BowdlerizeJToken(token);
+                        //    v = JTokenDestructurer.GetValues(propertyValueConverter, token) as StructureValue;
+                        //}
+                        //var key = property.Key;
+                        //changed.Add(key, v);
+
+                        var json = bowdlerizer.BowdlerizeJson(scalar.Value.ToString());
+                        var v = new ScalarValue(json);
                         var key = property.Key;
                         changed.Add(key, v);
                     } else if (XmlStringDestructurer.IsXmlString(scalar.Value)) {
-                        GetPropertyValueConverter(propertyFactory);
+                        //GetPropertyValueConverter(propertyFactory);
 
-                        var s = scalar.Value as string;
-                        var doc = new XmlDocument();
-                        doc.LoadXml(s);
-                        var json = JsonConvert.SerializeXmlNode(doc);
-                        var token = JToken.Parse(json);
-                        _ = bowdlerizer.BowdlerizeJToken(token);
+                        //var s = scalar.Value as string;
+                        //var doc = new XmlDocument();
+                        //doc.LoadXml(s);
+                        //var json = JsonConvert.SerializeXmlNode(doc);
+                        //var token = JToken.Parse(json);
+                        //_ = bowdlerizer.BowdlerizeJToken(token);
 
-                        XNode node = JsonConvert.DeserializeXNode(token.ToString(Newtonsoft.Json.Formatting.None));
-                        var v = new ScalarValue(node.ToString(SaveOptions.DisableFormatting));
+                        //XNode node = JsonConvert.DeserializeXNode(token.ToString(Newtonsoft.Json.Formatting.None));
+                        //var v = new ScalarValue(node.ToString(SaveOptions.DisableFormatting));
 
+                        var xml = bowdlerizer.BowdlerizeXml(scalar.Value as string);
+                        var v = new ScalarValue(xml);
                         var key = property.Key;
                         changed.Add(key, v);
                     }
