@@ -2,7 +2,7 @@ using System;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Serilog.Bowdlerizer {
+namespace Serilog.Bowdlerizer.Attributes {
     [AttributeUsage(AttributeTargets.Property)]
     public class BowdlerizeMaskAttribute : Attribute, IBowdlerizeAttribute {
         const string DefaultMask = "***";
