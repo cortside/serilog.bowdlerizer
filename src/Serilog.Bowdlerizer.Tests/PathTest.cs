@@ -23,7 +23,7 @@ namespace Serilog.Bowdlerizer.Tests {
                     Expression memberExpression1 = Expression.PropertyOrField(parameterExpression, property1);
                     var expression1 = Expression.Lambda(Expression.GetDelegateType(typeOfCurrentObject, memberExpression1.Type), memberExpression1, parameterExpression).Compile();
                     objectThatContainsPropertyName = expression1.DynamicInvoke(objectThatContainsPropertyName);
-                    var index = Int32.Parse(property.Substring(arrayIndex + 1, property.Length - arrayIndex - 2));
+                    var index = int.Parse(property.Substring(arrayIndex + 1, property.Length - arrayIndex - 2));
                     typeOfCurrentObject = objectThatContainsPropertyName.GetType();
                     parameterExpression = Expression.Parameter(typeOfCurrentObject, "list");
                     Expression memberExpression2 = Expression.Call(parameterExpression, typeOfCurrentObject.GetMethod("get_Item"), new Expression[] { Expression.Constant(index) });
@@ -52,7 +52,6 @@ namespace Serilog.Bowdlerizer.Tests {
             var result = TryGetValueForPropertyOrField(dateTime, "$..Foo", out object _);
             Assert.False(result);
         }
-
 
         [Fact]
         public void TestOneProperty() {

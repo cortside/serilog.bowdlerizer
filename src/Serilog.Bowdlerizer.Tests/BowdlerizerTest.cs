@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Net;
 using Cortside.Bowdlerizer;
 using Newtonsoft.Json;
+using RestSharp;
 using Serilog.Bowdlerizer.Tests.Helpers;
 using Serilog.Bowdlerizer.Tests.Models;
 using Serilog.Events;
@@ -88,7 +91,6 @@ namespace Serilog.Bowdlerizer.Tests {
             };
 
             log.Information("Here is {@Ignored}", model);
-
 
             var expected = QuoteExpectedString("Here is ", @"{""PersonId"":0,""MailingAddress"":{""Address1"":""***"",""Address2"":""c/o Elmer"",""City"":""***"",""State"":null,""Zip"":null},""FirstName"":""***"",""EmailAddress"":""foo@bar.baz"",""LastName"":""***"",""SocialSecurityNumber"":""***"",""Suffix"":null,""PhoneNumber"":""(801) 867-5309"",""BirthDate"":""***"",""Children"":[],""Addresses"":null}");
             var actual = evt.RenderMessage();
@@ -225,11 +227,41 @@ namespace Serilog.Bowdlerizer.Tests {
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
-            log.Information("Here is {SomeDate}", 123.45M);
+            log.Information("Here is {SomeDecimal}", 123.45M);
 
             const string expected = "Here is 123.45";
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void BowdlerizeRestResponse() {
+            LogEvent evt = null;
+
+            var log = new LoggerConfiguration()
+                .UsingBowdlerizer(bowdlerizer)
+                .WriteTo.Sink(new DelegatingSink(e => evt = e))
+                .CreateLogger();
+
+            // arrange
+            RestClient client = new RestClient("http://api.zippopotam.us");
+            RestRequest request = new RestRequest("us/90210", Method.Get);
+
+            // act
+            RestResponse response = null;
+            try {
+                response = client.Execute(request);
+            } catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+
+            // assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            log.Information("Here is {@Response}", response);
+
+            var actual = evt.RenderMessage();
+            Assert.DoesNotContain("Capturing the property value threw an exception", actual);
         }
     }
 }
