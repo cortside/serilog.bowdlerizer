@@ -2,7 +2,7 @@ using System;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Serilog.Bowdlerizer {
+namespace Serilog.Bowdlerizer.Destructurers {
     struct CacheEntry {
         public CacheEntry(Func<object, ILogEventPropertyValueFactory, LogEventPropertyValue> destructureFunc) {
             CanDestructure = true;

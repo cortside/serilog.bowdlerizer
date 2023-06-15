@@ -1,3 +1,18 @@
+# Release 1.2
+
+|Commit|Date|Author|Message|
+|---|---|---|---|
+| 79427a8 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update version
+| ee0d6e2 | <span style="white-space:nowrap;">2022-12-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'release/1.1' into develop
+| 1af7377 | <span style="white-space:nowrap;">2023-01-02</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'master' into develop
+| dae5300 | <span style="white-space:nowrap;">2023-01-03</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'master' into develop
+| b40955d | <span style="white-space:nowrap;">2023-03-01</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  [SVC-1237] output valid json and xml strings
+| ab5aebf | <span style="white-space:nowrap;">2023-03-01</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  [SVC-1237] massive cleanup and simplification
+| a332fff | <span style="white-space:nowrap;">2023-03-06</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge pull request #9 from cortside/SVC-1237
+| ea225eb | <span style="white-space:nowrap;">2023-03-07</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  merge from master
+| 265e09e | <span style="white-space:nowrap;">2023-06-14</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  (HEAD -> release/1.2, origin/develop, origin/HEAD, develop) update powershell scripts
+****
+
 # Release 1.1
 
 |Commit|Date|Author|Message|

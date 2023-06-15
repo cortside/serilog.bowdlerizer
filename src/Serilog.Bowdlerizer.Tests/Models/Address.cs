@@ -1,3 +1,5 @@
+using Serilog.Bowdlerizer.Attributes;
+
 namespace Serilog.Bowdlerizer.Tests.Models {
     public class Address {
         [BowdlerizeMask]
