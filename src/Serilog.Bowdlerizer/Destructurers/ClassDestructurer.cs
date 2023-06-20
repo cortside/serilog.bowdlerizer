@@ -7,9 +7,9 @@ using Serilog.Events;
 
 namespace Serilog.Bowdlerizer.Destructurers {
     public static class ClassDestructurer {
-        private readonly static ConcurrentDictionary<Type, CacheEntry> _cache = new ConcurrentDictionary<Type, CacheEntry>();
+        private static readonly ConcurrentDictionary<Type, CacheEntry> _cache = new ConcurrentDictionary<Type, CacheEntry>();
 
-        public static readonly HashSet<Type> BuiltInScalarTypes = new HashSet<Type>() {
+        internal static readonly HashSet<Type> BuiltInScalarTypes = new HashSet<Type>() {
             typeof(bool),
             typeof(char),
             typeof(byte),
