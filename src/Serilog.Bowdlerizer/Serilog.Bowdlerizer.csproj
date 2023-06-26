@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.Bowdlerizer" Version="1.1.46" />
+    <PackageReference Include="Cortside.Bowdlerizer" Version="1.2.51-develop" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.6.40">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

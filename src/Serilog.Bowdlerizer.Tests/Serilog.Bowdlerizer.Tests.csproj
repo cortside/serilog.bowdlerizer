@@ -5,7 +5,6 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.Bowdlerizer" Version="1.1.46" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.2" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.6.40">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
