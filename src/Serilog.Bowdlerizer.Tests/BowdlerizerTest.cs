@@ -1,5 +1,16 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Cortside.Bowdlerizer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using Serilog.Bowdlerizer.Tests.Helpers;
 using Serilog.Bowdlerizer.Tests.Models;
@@ -228,6 +239,90 @@ namespace Serilog.Bowdlerizer.Tests {
             log.Information("Here is {SomeDate}", 123.45M);
 
             const string expected = "Here is 123.45";
+            var actual = evt.RenderMessage();
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void BowdlerizeHeaderDictionary() {
+            LogEvent evt = null;
+
+            var log = new LoggerConfiguration()
+                .UsingBowdlerizer(bowdlerizer)
+                .WriteTo.Sink(new DelegatingSink(e => evt = e))
+                .CreateLogger();
+
+            var dict = new HeaderDictionary {
+                { "foo", new StringValues("bar") },
+                { "baz", new StringValues(new[] { "1", "2", "3" }) }
+            };
+
+            log.Information("Here is {@value}", dict);
+
+            const string expected = "Here is \"{\\\"foo\\\":[\\\"bar\\\"],\\\"baz\\\":[\\\"1\\\",\\\"2\\\",\\\"3\\\"]}\"";
+            var actual = evt.RenderMessage();
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task BowdlerizerHttpRequest() {
+            LogEvent evt = null;
+
+            Log.Logger = new LoggerConfiguration()
+                .UsingBowdlerizer(bowdlerizer)
+                .WriteTo.Sink(new DelegatingSink(e => evt = e))
+                .CreateLogger();
+
+            using var host = await new HostBuilder()
+                .ConfigureWebHost(webBuilder => {
+                    webBuilder
+                        .UseTestServer()
+                        .ConfigureServices(services => {
+                        })
+                        .Configure(app => {
+                            app.Run(async (HttpContext context) => {
+                                Log.Information("request headers {@RequestHeaders}", context.Request.Headers);
+                                var items = new string[] { "rock", "paper", "scissors" };
+                                var result = items[new Random().Next(items.Length)];
+
+                                // Add custom header 
+                                context.Response.Headers.Add("X-Rochambeau", result);
+
+                                // Write response body
+                                await context.Response.WriteAsync($"Rochambeau-Outcome: {result}");
+                            });
+                        });
+                })
+                .StartAsync();
+
+            var server = host.GetTestServer();
+            server.BaseAddress = new Uri("https://example.com/A/Path/");
+
+            var context = await server.SendAsync(c => {
+                c.Request.Method = HttpMethods.Post;
+                c.Request.Path = "/and/file.txt";
+                c.Request.QueryString = new QueryString("?and=query");
+                c.Request.Headers.ContentType = "application/json; charset=utf-8";
+                c.Request.Headers["X-Docusign-Accountid"] = "d3f71edb-55ec-4fce-92a8-1790b4750cc4";
+                c.Request.Headers["X-Docusign-Signature-1"] = "0ll4pbE40s5GEg47hdcw57hRUhH2pT7ydvGPIlNZo3Y=";
+            });
+
+            Assert.True(context.RequestAborted.CanBeCanceled);
+            Assert.Equal(HttpProtocol.Http11, context.Request.Protocol);
+            Assert.Equal("POST", context.Request.Method);
+            Assert.Equal("https", context.Request.Scheme);
+            Assert.Equal("example.com", context.Request.Host.Value);
+            Assert.Equal("/A/Path", context.Request.PathBase.Value);
+            Assert.Equal("/and/file.txt", context.Request.Path.Value);
+            Assert.Equal("?and=query", context.Request.QueryString.Value);
+            Assert.NotNull(context.Request.Body);
+            Assert.NotNull(context.Request.Headers);
+            Assert.NotNull(context.Response.Headers);
+            Assert.NotNull(context.Response.Body);
+            Assert.Equal(200, context.Response.StatusCode);
+            Assert.Null(context.Features.Get<IHttpResponseFeature>().ReasonPhrase);
+
+            const string expected = "request headers \"{\\\"Host\\\":[\\\"example.com\\\"],\\\"Content-Type\\\":[\\\"application/json; charset=utf-8\\\"],\\\"X-Docusign-Accountid\\\":[\\\"d3f71edb-55ec-4fce-92a8-1790b4750cc4\\\"],\\\"X-Docusign-Signature-1\\\":[\\\"0ll4pbE40s5GEg47hdcw57hRUhH2pT7ydvGPIlNZo3Y=\\\"]}\"";
             var actual = evt.RenderMessage();
             Assert.Equal(expected, actual);
         }
