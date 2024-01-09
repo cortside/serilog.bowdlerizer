@@ -1,3 +1,17 @@
+# Release 6.1
+
+* Update nuget dependencies to latest stable versions, including serilog for supporting multitargeted net6.0 and net8.0 libraries
+
+|Commit|Date|Author|Message|
+|---|---|---|---|
+| 5bef490 | <span style="white-space:nowrap;">2023-08-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update version
+| 42deb01 | <span style="white-space:nowrap;">2023-08-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'master' into develop
+| bc7240e | <span style="white-space:nowrap;">2023-09-04</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'master' into develop
+| 83e9af2 | <span style="white-space:nowrap;">2023-12-22</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to latest serilog packages
+| 8fc9e9b | <span style="white-space:nowrap;">2023-12-22</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'develop' of github.com:cortside/serilog.bowdlerizer into develop
+| 8bfc1ba | <span style="white-space:nowrap;">2024-01-09</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  (HEAD -> release/6.1, origin/develop, origin/HEAD, develop) update latest powershell scripts
+****
+
 # Release 6.0
 
 * Update version number to match framework version (6.x)
