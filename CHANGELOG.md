@@ -1,5 +1,7 @@
 # Release 6.1
 
+* Update nuget dependencies to latest stable versions, including serilog for supporting multitargeted net6.0 and net8.0 libraries
+
 |Commit|Date|Author|Message|
 |---|---|---|---|
 | 5bef490 | <span style="white-space:nowrap;">2023-08-29</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update version
