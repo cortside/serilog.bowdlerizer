@@ -5,4 +5,3 @@
 ## Serilog.Bowdlerizer
 
 Destructurer and Enricher to bowdlerize entities in logs
-
