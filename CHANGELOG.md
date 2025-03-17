@@ -1,3 +1,29 @@
+# Release 8.0
+
+* Updated powershell scripts to latest versions from coeus/shoppingcart-api
+* Standardized library build files and resolved code coverage issues
+* Update target framework to net8.0
+* Update all dependency nuget packages
+* Add/Fix build badges
+* Transition to use Shouldly instead of FluentAssertions
+
+|Commit|Date|Author|Message|
+|---|---|---|---|
+| 551a21f | <span style="white-space:nowrap;">2024-01-09</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update version
+| f58f9f6 | <span style="white-space:nowrap;">2024-01-09</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'master' into develop
+| 0887563 | <span style="white-space:nowrap;">2025-02-06</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to net8
+| fb4d309 | <span style="white-space:nowrap;">2025-02-06</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  Merge branch 'develop' of github.com:cortside/serilog.bowdlerizer into develop
+| b029647 | <span style="white-space:nowrap;">2025-02-06</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to net8
+| f70dd84 | <span style="white-space:nowrap;">2025-02-06</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to net8
+| 6a78537 | <span style="white-space:nowrap;">2025-02-12</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  updates to get code coverage working
+| e2baee3 | <span style="white-space:nowrap;">2025-02-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  standardization updates
+| d1183d3 | <span style="white-space:nowrap;">2025-02-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to net8
+| c7da036 | <span style="white-space:nowrap;">2025-02-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to net8
+| 45c8758 | <span style="white-space:nowrap;">2025-02-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to net8
+| b1a649e | <span style="white-space:nowrap;">2025-02-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  update to net8
+| c1376ab | <span style="white-space:nowrap;">2025-03-13</span> | <span style="white-space:nowrap;">Cort Schaefer</span> |  (HEAD -> release/8.0, origin/develop, origin/HEAD, develop) update packages
+****
+
 # Release 6.1
 
 * Update nuget dependencies to latest stable versions, including serilog for supporting multitargeted net6.0 and net8.0 libraries

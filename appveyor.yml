@@ -1,8 +1,10 @@
-## https://www.appveyor.com/docs/appveyor-yml/
+##
+# library build
+##
 
 image: Previous Visual Studio 2022
 
-version: 6.1.{build}
+version: 8.1.{build}
 
 configuration:
 - Debug
@@ -12,17 +14,24 @@ platform: Any CPU
 pull_requests:  
   do_not_increment_build_number: true
 
+skip_commits:
+  files:
+    - CHANGELOG.md
+    - appveyor.yml
+    - repository.json
+    - src/version.json
+
 environment:
   # Don't report back to the mothership
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   JAVA_HOME: C:\Program Files\Java\jdk19
   SONAR_TOKEN:
     secure: fNmV/P8zSNwd3LWpzw2nnm807oe1Hr0gr11hTItGCXmnVQ0tHN1ESPUjLYjsXmpG
-  SONAR_PROJECT: cortside_serilog.bowdlerizer
   RESTRICTED_WORDS:
     secure: y2oCk9wYmgBAzk4m1tsSFUOlcEePEjozzMCfC0p6NQI=
 
-init:
+install:
+- ps: ./dotenv.ps1
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - ps: Get-ChildItem "Env:"
 
@@ -50,8 +59,6 @@ cache:
   
 nuget:
   disable_publish_on_pr: true
-#  account_feed: true
-#  project_feed: true
   
 deploy:
 - provider: NuGet
