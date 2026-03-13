@@ -101,7 +101,7 @@ namespace Serilog.Bowdlerizer.Enrichers {
             }
 
             s = s.Trim();
-            if ((!s.StartsWith("{") || !s.EndsWith("}")) && (!s.StartsWith("[") || !s.EndsWith("]"))) {
+            if ((!s.StartsWith('{') || !s.EndsWith('}')) && (!s.StartsWith('[') || !s.EndsWith(']'))) {
                 return false;
             }
 
@@ -116,7 +116,7 @@ namespace Serilog.Bowdlerizer.Enrichers {
         public static bool IsXmlString(object value) {
             if (value is string s) {
                 s = s.Trim();
-                if (s.StartsWith("<") && s.EndsWith(">")) {
+                if (s.StartsWith('<') && s.EndsWith('>')) {
                     return true;
                 }
             }
