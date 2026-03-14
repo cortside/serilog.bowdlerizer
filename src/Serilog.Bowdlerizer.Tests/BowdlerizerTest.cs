@@ -286,7 +286,7 @@ namespace Serilog.Bowdlerizer.Tests {
                                 var result = items[new Random().Next(items.Length)];
 
                                 // Add custom header 
-                                context.Response.Headers.Add("X-Rochambeau", result);
+                                context.Response.Headers.Append("X-Rochambeau", result);
 
                                 // Write response body
                                 await context.Response.WriteAsync($"Rochambeau-Outcome: {result}");
